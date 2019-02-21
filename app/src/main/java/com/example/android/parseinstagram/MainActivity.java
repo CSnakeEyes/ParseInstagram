@@ -31,10 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    EditText descriptionEt;
-    ImageView newPictureIv;
-    Button takePictureBtn;
-    Button submitBtn;
+    private EditText descriptionEt;
+    private ImageView newPictureIv;
+    private Button takePictureBtn;
+    private Button submitBtn;
+    private Button profileBtn;
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
@@ -49,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
         newPictureIv = findViewById(R.id.newPic_iv);
         takePictureBtn = findViewById(R.id.takePic_btn);
         submitBtn = findViewById(R.id.submit_btn);
+        profileBtn = findViewById(R.id.profile_btn);
+
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goLogoutActivity();
+            }
+        });
 
         takePictureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 savePost(description, user, photoFile);
             }
         });
+    }
+
+    private void goLogoutActivity() {
+        Intent i = new Intent(this, LogoutActivity.class);
+        startActivity(i);
     }
 
     private void launchCamera() {

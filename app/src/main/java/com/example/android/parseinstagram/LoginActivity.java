@@ -1,8 +1,8 @@
 package com.example.android.parseinstagram;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,27 +24,33 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        usernameEt = findViewById(R.id.username_et);
-        passwordEt = findViewById(R.id.password_et);
-        loginBtn = findViewById(R.id.login_btn);
-        signupBtn = findViewById(R.id.signup_btn);
+        ParseUser user = ParseUser.getCurrentUser();
+        if (user != null) {
+            goMainActivity();
+        } else {
+            setContentView(R.layout.activity_login);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String username = usernameEt.getText().toString();
-                String password = passwordEt.getText().toString();
-                login(username, password);
-            }
-        });
-        signupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goSignUpActivity();
-            }
-        });
+            usernameEt = findViewById(R.id.username_et);
+            passwordEt = findViewById(R.id.password_et);
+            loginBtn = findViewById(R.id.login_btn);
+            signupBtn = findViewById(R.id.signup_btn);
+
+            loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String username = usernameEt.getText().toString();
+                    String password = passwordEt.getText().toString();
+                    login(username, password);
+                }
+            });
+            signupBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goSignUpActivity();
+                }
+            });
+        }
     }
 
     private void goSignUpActivity() {

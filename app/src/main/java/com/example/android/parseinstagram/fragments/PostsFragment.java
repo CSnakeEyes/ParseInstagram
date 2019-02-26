@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,7 +29,7 @@ public class PostsFragment extends Fragment {
     private RecyclerView postsRv;
     private PostsAdapter adapter;
     private List<Post> mPosts;
-//    private SwipeRefreshLayout swipeContainer;
+    private SwipeRefreshLayout swipeContainer;
 
     //onCreateView inflates the view
     @Nullable
@@ -41,16 +42,16 @@ public class PostsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         postsRv = view.findViewById(R.id.posts_rv);
 
-//        swipeContainer = view.findViewById(R.id.swipeContainer);
-//
-//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-//                android.R.color.holo_green_light,
-//                android.R.color.holo_orange_light,
-//                android.R.color.holo_red_light);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         // Create data source
         mPosts = new ArrayList<>();
-        // Create adapter
+        // Create adap ter
         adapter = new PostsAdapter(getContext(), mPosts);
         // Set adapter on Recycler View
         postsRv.setAdapter(adapter);
@@ -59,12 +60,12 @@ public class PostsFragment extends Fragment {
 
         queryPosts();
 
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                queryPosts();
-//            }
-//        });
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryPosts();
+            }
+        });
     }
 
     protected void queryPosts() {
@@ -82,10 +83,10 @@ public class PostsFragment extends Fragment {
                 }
 
                 mPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
-//                adapter.clear();
-//                adapter.addAll(mPosts);
-//                swipeContainer.setRefreshing(false);
+//                adapter.notifyDataSetChanged();
+                adapter.clear();
+                adapter.addAll(mPosts);
+                swipeContainer.setRefreshing(false);
 
 
                 for(int i = 0; i < posts.size(); i++) {

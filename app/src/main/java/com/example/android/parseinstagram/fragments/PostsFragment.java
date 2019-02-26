@@ -28,6 +28,7 @@ public class PostsFragment extends Fragment {
     private RecyclerView postsRv;
     private PostsAdapter adapter;
     private List<Post> mPosts;
+//    private SwipeRefreshLayout swipeContainer;
 
     //onCreateView inflates the view
     @Nullable
@@ -40,9 +41,16 @@ public class PostsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         postsRv = view.findViewById(R.id.posts_rv);
 
+//        swipeContainer = view.findViewById(R.id.swipeContainer);
+//
+//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light);
+
         // Create data source
         mPosts = new ArrayList<>();
-        // Create adap ter
+        // Create adapter
         adapter = new PostsAdapter(getContext(), mPosts);
         // Set adapter on Recycler View
         postsRv.setAdapter(adapter);
@@ -50,6 +58,13 @@ public class PostsFragment extends Fragment {
         postsRv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         queryPosts();
+
+//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                queryPosts();
+//            }
+//        });
     }
 
     protected void queryPosts() {
@@ -68,6 +83,10 @@ public class PostsFragment extends Fragment {
 
                 mPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
+//                adapter.clear();
+//                adapter.addAll(mPosts);
+//                swipeContainer.setRefreshing(false);
+
 
                 for(int i = 0; i < posts.size(); i++) {
                     Post post = posts.get(i);
